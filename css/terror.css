@@ -1,0 +1,67 @@
+/* terror.css · Hoja de estilos del túnel del terror
+   La da la profesora: copiadla tal cual. Funciona sola con las etiquetas HTML
+   (no hace falta poner clases, salvo class="pergamino" en el body del pergamino). */
+@import url("https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap");
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #d9d9d9;
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    background: radial-gradient(ellipse at center, #2a0000 0%, #000000 75%) fixed;
+}
+header { text-align: center; padding: 2rem 1rem 0.5rem; }
+h1 {
+    font-family: "Creepster", fantasy;
+    font-size: 5rem;
+    letter-spacing: 0.05em;
+    color: #ff7518;
+    margin: 0;
+    text-shadow: 0 0 20px #ff0000;
+    animation: vela 4s ease-in-out infinite;
+}
+@keyframes vela { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+h2 { font-family: "Creepster", fantasy; font-size: 2.4rem; letter-spacing: 0.05em; color: #b30000; margin-top: 0; }
+nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+a { color: #ff7518; }
+a:hover { color: #ff2a2a; }
+main { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem 3rem; }
+section {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid #3a0000;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 0 30px rgba(120, 0, 0, 0.35);
+}
+em { color: #e8d5a3; }
+strong { color: #ff4d4d; }
+mark { background: #5c0000; color: #ffffff; padding: 0 0.2em; }
+del { color: #777777; }
+abbr[title] { text-decoration: underline dotted #ff7518; cursor: help; }
+small { color: #999999; }
+li { margin: 0.3rem 0; }
+li::marker { color: #ff7518; }
+figure { margin: 1.5rem auto; text-align: center; }
+img { max-width: 100%; height: auto; border: 4px solid #3b2a1a; filter: grayscale(0.4) contrast(1.1); }
+figcaption { font-style: italic; color: #aaaaaa; margin-top: 0.5rem; }
+iframe { width: 100%; height: 420px; border: 6px double #8b6b2e; border-radius: 8px; background: #e8d5a3; }
+details { background: #1a0000; border: 1px dashed #b30000; border-radius: 8px; padding: 1rem; }
+summary { cursor: pointer; color: #ff7518; font-weight: bold; }
+audio { display: block; margin: 1rem auto; }
+footer { text-align: center; color: #777777; font-size: 0.9rem; padding: 2rem 1rem; }
+
+/* El pergamino (la página que va dentro del iframe) */
+body.pergamino { background: #e8d5a3; color: #3b2a1a; padding: 1.5rem; }
+body.pergamino h1 { font-size: 2.5rem; color: #5c0000; text-shadow: none; animation: none; }
+body.pergamino strong { color: #8b0000; }
+body.pergamino em { color: #5c3a1a; }
+body.pergamino details { background: #f3e6c4; border-color: #8b0000; }
+body.pergamino summary { color: #8b0000; }
+body.pergamino del { color: #8a7a60; }
+
+/* Si el ordenador pide menos movimiento, quitamos la animación */
+@media (prefers-reduced-motion: reduce) { h1 { animation: none; } }
