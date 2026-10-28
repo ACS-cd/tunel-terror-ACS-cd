@@ -65,3 +65,14 @@ Imágenes y sonidos con autor, web y licencia.
 - **Prueba:** Abrí la página y probé cada enlace del menú: los de `#historia`, `#lista` y `#pergamino` saltan a la sección que tiene ese `id`, y «Abrir a pantalla completa» abre `pergamino.html`. El enlace a Pixabay se abre en otra pestaña.
 - **Decisión:** Usé `<nav>` con una lista `<ul>` para el menú, `href="#id"` para las secciones, `href="pergamino.html"` para la otra página y `<footer>` para los créditos. El enlace externo lleva `target="_blank" rel="noopener"` para que la página nueva no pueda controlar la nuestra.
 - **Nivel de pista usado:** 2
+
+### Reto 7 · La pista escondida
+- **Pregunta:** ¿Cómo escondo la pista (el usuario válido `caronte`) usando solo HTML? ¿Qué forma encaja mejor con la temática y con el programa de 2.º?
+- **Fuentes:** https://developer.mozilla.org/es/docs/Web/HTML/Element/details · https://developer.mozilla.org/es/docs/Web/HTML/Element/abbr · https://developer.mozilla.org/es/docs/Web/HTML/Element/mark
+- **Comparativa de opciones:**
+  - **`abbr` con `title`:** la pista aparece como tooltip al pasar el ratón sobre la palabra. No se ve a simple vista, muy oculto; pero si el visitante no pasa el ratón exactamente ahí, jamás lo encuentra. Además, en móviles sin ratón no funciona.
+  - **`details` + `summary`:** crea un bloque desplegable. No se ve a simple vista, hay que hacer clic en el resumen para revelar el contenido. Es más dramático y teatral, encaja bien con la temática de terror. Cualquier visitante curioso lo encuentra sin necesidad de adivinar dónde pasar el ratón.
+- **Lo que dice MDN (con mis palabras):** `<details>` es un elemento que muestra u oculta contenido; `<summary>` es el título que siempre se ve y al que se hace clic para expandir. Es nativo del navegador, sin JavaScript. `<abbr>` con `title` muestra un tooltip solo al pasar el ratón, sin garantía en móviles.
+- **Prueba en pruebas.html:** Probé ambas opciones. Con `abbr`, al pasar el ratón sobre "caronte" salía la pista en un pequeño tooltip. Con `details`, al hacer clic en "Nota del archivero" se desplegaba el texto con el nombre de usuario. La versión `details` fue más llamativa y fiable en todos los dispositivos.
+- **Decisión en mi sala:** Usé `<details>` + `<summary>` en `pergamino.html`. Añadí un bloque con el resumen «Nota del archivero» que al desplegarse revela que el usuario `caronte` fue el último en acceder. La pista ya era visible (es el único nombre sin `<del>`), y el `details` añade un nivel de teatralidad extra. Encaja con el curriculum de 2.º porque es una etiqueta semántica HTML5 estándar.
+- **Pista de nivel usada:** ninguna

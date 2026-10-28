@@ -3,11 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pruebas · Reto 4</title>
+    <title>Pruebas · Retos 4 y 7</title>
     <link rel="stylesheet" href="css/terror.css">
 </head>
 <body>
     <main>
+
+        <!-- ══════════════════════════════════════════════════════ -->
+        <!--  RETO 7 · Prueba de formas de esconder la pista       -->
+        <!-- ══════════════════════════════════════════════════════ -->
+
+        <section>
+            <h2>Reto 7 · OPCIÓN A: abbr con title (tooltip al pasar el ratón)</h2>
+            <p>Usuario: <abbr title="Este es el usuario válido. Escríbelo en el login.">caronte</abbr></p>
+            <p><small>No se ve a simple vista. Solo aparece al pasar el ratón. Muy oculto, pero puede pasar desapercibido.</small></p>
+        </section>
+
+        <section>
+            <h2>Reto 7 · OPCIÓN B: details + summary (bloque desplegable)</h2>
+            <details>
+                <summary>Nota del archivero (haz clic para revelar)</summary>
+                <p>Hay un usuario que nunca fue dado de baja. Su nombre: <strong>caronte</strong>.</p>
+            </details>
+            <p><small>No se ve a simple vista. Hay que hacer clic. Más teatral y encaja con la temática de terror.</small></p>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════ -->
+        <!--  RETO 4 · Listas anidadas: MAL y BIEN                 -->
+        <!-- ══════════════════════════════════════════════════════ -->
+
         <section>
             <h2>Reto 4 · MAL (provoca el error)</h2>
             <ol>
@@ -36,6 +60,7 @@
                 <li>Si la pantalla te llama por tu nombre, <strong>«apágala»</strong>.</li>
             </ol>
         </section>
+
     </main>
 </body>
 </html>
