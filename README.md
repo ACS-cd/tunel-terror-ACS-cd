@@ -43,10 +43,18 @@ Una entrada por reto (8 en total). Rellénala mientras trabajas y súbela en el 
 ## Créditos
 Imágenes y sonidos con autor, web y licencia.
 
-### Reto 5 · Los retratos
-- **Pregunta:** ¿Para qué sirve el texto alternativo si la imagen ya se ve? ¿Qué pasa si la ruta está mal? ¿Qué aporta agrupar la imagen y su pie de foto frente a un párrafo debajo? ¿Por qué el ancho va sin unidades?
-- **Fuente:** https://developer.mozilla.org/es/docs/Web/HTML/Element/img y https://developer.mozilla.org/es/docs/Web/HTML/Element/figure
-- **Lo que dice (con mis palabras):** El `alt` describe la imagen para quien no la ve: lo leen los lectores de pantalla, lo usan los buscadores y aparece si la imagen no carga. `figure` agrupa la imagen con su `figcaption`, así el pie de foto queda unido a esa imagen; un `<p>` debajo no tiene relación con ella. El atributo `width` en HTML se mide siempre en píxeles, por eso no lleva unidad (las unidades como `%` o `em` van en CSS).
-- **Prueba en pruebas.html:** Cambié el nombre del archivo a `Morgue.jpg` y salió el icono de imagen rota con el texto del `alt`. Al volver a poner `morgue.jpg` se vio bien, así que las mayúsculas y la extensión tienen que coincidir exactamente.
-- **Decisión en mi sala:** Uso `img` suelta para el pasillo (`img/morgue.jpg`) y `figure` + `figcaption` para el ordenador (`img/ordenador.jpg`), porque es la que lleva pie de foto. Las dos con `alt` descriptivo y `width="450"`, colocadas en la sección de las normas debajo de la lista.
-- **Pista de nivel usada:** ninguna
+### Reto 6 (parte 1) · El documento secreto
+- **Pregunta:** ¿Qué partes del esqueleto del paso 1 se repiten en cualquier página y cuáles cambian? ¿Cómo enlazo la misma hoja de estilos desde una segunda página? ¿Qué es un atributo global como `class` y para qué lo usa la hoja de estilos?
+- **Fuente:** https://developer.mozilla.org/es/docs/Web/HTML/Global_attributes y https://developer.mozilla.org/es/docs/Web/HTML/Global_attributes/class
+- **Lo que dice (con mis palabras):** Un atributo global es uno que se puede poner en cualquier etiqueta HTML, como `id`, `title`, `lang` o `class`. `class` le da a un elemento uno o varios nombres que la hoja de estilos usa para aplicarle estilos solo a él y a los que tengan esa misma clase. El esqueleto (`<!DOCTYPE>`, `<html lang>`, `<head>` con `meta` y `link`) es igual en todas las páginas; lo que cambia es el `<title>` y el contenido del `<body>`.
+- **Prueba en pruebas.html:** Puse `<body>` sin clase y la página salió con el estilo general de la sala (negro y rojo). Al añadir `class="pergamino"` cambió a fondo color papel y letras marrones, así que la hoja de estilos tiene reglas distintas para esa clase.
+- **Decisión en mi sala:** Creo `pergamino.html` junto a `index.html` con el mismo `<head>`, cambiando solo el título a «Registro de usuarios · Sala 3». El `<link>` usa la misma ruta `css/terror.css` porque las dos páginas están en la misma carpeta. Pongo `class="pergamino"` en el `<body>`. Los usuarios dados de baja van con `<del>` porque ya no valen, `caronte` con `<strong>` porque es el importante y «fallecimiento» con `<em>` porque lleva énfasis.
+- **Pista de nivel usada:**
+
+### Reto 6 · Incrustar el pergamino
+- **Pregunta:** ¿Qué etiqueta muestra una página dentro de otra? ¿Por qué es obligatorio darle un nombre accesible y qué oye una persona con lector de pantalla si no lo tiene? ¿Qué atributos controlan su tamaño?
+- **Fuente:** https://developer.mozilla.org/es/docs/Web/HTML/Element/iframe
+- **Lo que dice (con mis palabras):** `iframe` incrusta otra página HTML dentro de la actual, y con `src` indicas cuál. El atributo `title` le da un nombre accesible: el lector de pantalla lo anuncia para que la persona sepa qué contiene el marco antes de entrar. Sin él solo oiría algo como «marco» sin saber qué es. El tamaño se controla con `width` y `height`, que en HTML van en píxeles y sin unidad.
+- **Prueba en pruebas.html:** Incrusté `pergamino.html` con un `iframe` y se vio la página dentro de la otra. Cambié `width` y `height` y el marco cambió de tamaño. Quité el `title`, pasé el archivo por el validador y comprobé qué decía.
+- **Decisión en mi sala:** Añado una tercera sección con `id="pergamino"` debajo de las normas, con su `h2`, el párrafo y un `iframe` con `src="pergamino.html"`, `title="Registro de usuarios"`, `width="600"` y `height="400"`. Pongo el `title` porque sin él el marco no es accesible.
+- **Pista de nivel usada:**
