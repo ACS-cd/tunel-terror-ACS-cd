@@ -58,3 +58,10 @@ Imágenes y sonidos con autor, web y licencia.
 - **Prueba en pruebas.html:** Incrusté `pergamino.html` con un `iframe` y se vio la página dentro de la otra. Cambié `width` y `height` y el marco cambió de tamaño. Quité el `title`, pasé el archivo por el validador y comprobé qué decía.
 - **Decisión en mi sala:** Añado una tercera sección con `id="pergamino"` debajo de las normas, con su `h2`, el párrafo y un `iframe` con `src="pergamino.html"`, `title="Registro de usuarios"`, `width="600"` y `height="400"`. Pongo el `title` porque sin él el marco no es accesible.
 - **Pista de nivel usada:**
+
+### Reto 3 · El menú de enlaces y el footer
+- **Pregunta:** ¿Cómo enlazo a una sección de la misma página, a otra página y a una web externa de forma segura?
+- **Fuente:** MDN · a (https://developer.mozilla.org/es/docs/Web/HTML/Element/a) y MDN · nav (https://developer.mozilla.org/es/docs/Web/HTML/Element/nav).
+- **Prueba:** Abrí la página y probé cada enlace del menú: los de `#historia`, `#lista` y `#pergamino` saltan a la sección que tiene ese `id`, y «Abrir a pantalla completa» abre `pergamino.html`. El enlace a Pixabay se abre en otra pestaña.
+- **Decisión:** Usé `<nav>` con una lista `<ul>` para el menú, `href="#id"` para las secciones, `href="pergamino.html"` para la otra página y `<footer>` para los créditos. El enlace externo lleva `target="_blank" rel="noopener"` para que la página nueva no pueda controlar la nuestra.
+- **Nivel de pista usado:** 2
