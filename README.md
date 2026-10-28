@@ -42,3 +42,11 @@ Una entrada por reto (8 en total). Rellénala mientras trabajas y súbela en el 
 
 ## Créditos
 Imágenes y sonidos con autor, web y licencia.
+
+### Reto 5 · Los retratos
+- **Pregunta:** ¿Para qué sirve el texto alternativo si la imagen ya se ve? ¿Qué pasa si la ruta está mal? ¿Qué aporta agrupar la imagen y su pie de foto frente a un párrafo debajo? ¿Por qué el ancho va sin unidades?
+- **Fuente:** https://developer.mozilla.org/es/docs/Web/HTML/Element/img y https://developer.mozilla.org/es/docs/Web/HTML/Element/figure
+- **Lo que dice (con mis palabras):** El `alt` describe la imagen para quien no la ve: lo leen los lectores de pantalla, lo usan los buscadores y aparece si la imagen no carga. `figure` agrupa la imagen con su `figcaption`, así el pie de foto queda unido a esa imagen; un `<p>` debajo no tiene relación con ella. El atributo `width` en HTML se mide siempre en píxeles, por eso no lleva unidad (las unidades como `%` o `em` van en CSS).
+- **Prueba en pruebas.html:** Cambié el nombre del archivo a `Morgue.jpg` y salió el icono de imagen rota con el texto del `alt`. Al volver a poner `morgue.jpg` se vio bien, así que las mayúsculas y la extensión tienen que coincidir exactamente.
+- **Decisión en mi sala:** Uso `img` suelta para el pasillo (`img/morgue.jpg`) y `figure` + `figcaption` para el ordenador (`img/ordenador.jpg`), porque es la que lleva pie de foto. Las dos con `alt` descriptivo y `width="450"`, colocadas en la sección de las normas debajo de la lista.
+- **Pista de nivel usada:** ninguna
