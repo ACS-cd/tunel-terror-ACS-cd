@@ -29,6 +29,14 @@ Una entrada por reto (8 en total). Rellénala mientras trabajas y súbela en el 
 - **Decisión en mi sala:** `<del>` en "correctamente", `<abbr>` en "departamento TI", `<sup>` en 4 ºC, `<sub>` en CH₂O, `<mark>` en "No entréis solos", `<small>` en el mensaje automático, y un comentario con la pista hacia pergamino.html.
 - **Pista de nivel usada:** ninguna
 
+### Reto 4 · Las normas para sobrevivir
+- **Pregunta:** ¿Cuándo uso una lista ordenada (`ol`) y cuándo una no ordenada (`ul`)? ¿Dónde va la lista de dentro para que el validador no dé error?
+- **Fuente:** https://developer.mozilla.org/es/docs/Web/HTML/Element/ol y https://developer.mozilla.org/es/docs/Web/HTML/Element/ul
+- **Lo que dice (con mis palabras):** `ol` es para cuando el orden importa (pasos) y `ul` para cuando da igual. Dentro de un `ol` o un `ul` solo pueden ir `li`, así que una lista anidada tiene que ir dentro de un `li`.
+- **Prueba en pruebas.html:** Puse el `ul` directamente dentro del `ol`, fuera de un `li`. El validador dijo: «Error: Element `ul` not allowed as child of element `ol` in this context.» (línea 17). Es decir, un `ul` no puede ser hijo directo de un `ol`. Al meter el `ul` dentro del segundo `li`, antes de `</li>`, el error desapareció.
+- **Decisión en mi sala:** uso `ol` en los pasos de «Cómo recuperar tu acceso» porque el orden importa, y `ul` en los consejos del paso 2 porque el orden da igual. Marco «apágala» con `strong` porque es lo más importante.
+- **Pista de nivel usada:** ninguna
+
 ## Captura
 ![Mi sala](docs/captura.png)
 
