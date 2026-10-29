@@ -179,7 +179,6 @@ abbr[title] { text-decoration: underline dotted var(--aviso); cursor: help; }
 small { font-family: "Homemade Apple", cursive; font-size: 0.85rem; color: #9a8f74; line-height: 1.9; }
 li { margin: 0.35rem 0; }
 li::marker { color: var(--sangre-viva); }
-ol li::marker { content: counter(list-item) ". "; font-family: "VT323", monospace; }
 
 /* ════════ Imágenes: cámara de vigilancia ════════ */
 img {
@@ -369,17 +368,12 @@ body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e
     left: 52.5%;
     bottom: 49%;
     height: 9%;
-    aspect-ratio: 0.38;
+    aspect-ratio: 0.36;
     translate: -50% 0;
     pointer-events: none;
-    background:
-        radial-gradient(circle at 43% 9%, rgba(255, 240, 200, 0.85) 0 1.6%, transparent 2.4%),
-        radial-gradient(circle at 57% 9%, rgba(255, 240, 200, 0.85) 0 1.6%, transparent 2.4%),
-        radial-gradient(ellipse 17% 10% at 50% 9%, #000000 85%, transparent 100%),
-        radial-gradient(ellipse 40% 34% at 50% 40%, #000000 85%, transparent 100%),
-        linear-gradient(to right, transparent 26%, #000000 30% 47%, transparent 48% 52%, #000000 53% 70%, transparent 74%) 0 60% / 100% 42% no-repeat;
-    filter: blur(0.7px);
-    opacity: 0.9;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 110'%3E%3Cg fill='%23d8d6c8'%3E%3Cellipse cx='22' cy='10' rx='5' ry='6.5' transform='rotate(18 22 10)'/%3E%3Cpath d='M19 16 L23 16 L24 19 C30 21 31 24 31 30 L33 64 L31.5 65 L28 34 L27 52 L26 108 L23 108 L21 66 L19 108 L16 108 L15 52 L14 34 L10.5 65 L9 64 L11 30 C11 24 12 21 18 19 Z'/%3E%3C/g%3E%3Ccircle cx='20.3' cy='10' r='1' fill='%23000'/%3E%3Ccircle cx='24.3' cy='11.2' r='1' fill='%23000'/%3E%3C/svg%3E") center bottom / contain no-repeat;
+    filter: blur(0.6px) drop-shadow(0 0 4px rgba(220, 230, 210, 0.5));
+    opacity: 0.55;
     animation: se-acerca 420s cubic-bezier(0.6, 0, 1, 1) forwards, fluorescente-figura 5s steps(1) infinite;
 }
 @keyframes se-acerca {
@@ -387,7 +381,11 @@ body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e
     to { height: 92%; bottom: 2%; }
 }
 /* Cuando la luz se va, la figura desaparece; cuando vuelve en negativo, está más clara que nunca */
-@keyframes fluorescente-figura { 0%, 40%, 43%, 100% { opacity: 0.9; } 41% { opacity: 0; } 42% { opacity: 1; filter: invert(1) blur(0.4px); } }
+@keyframes fluorescente-figura {
+    0%, 40%, 43%, 100% { opacity: 0.55; filter: blur(0.6px) drop-shadow(0 0 4px rgba(220, 230, 210, 0.5)); }
+    41% { opacity: 0; }
+    42% { opacity: 1; filter: invert(1) blur(0.3px); }
+}
 
 /* La hora y las visitas */
 .aviso-hora { margin: 1.4rem auto 0; color: var(--aviso); font-size: 1.25rem; letter-spacing: 0.06em; }
@@ -395,7 +393,6 @@ body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e
 .visitas { color: var(--hueso); border-left: 2px solid var(--sangre-viva); padding-left: 0.8rem; }
 
 /* El botón que huye */
-.login { text-align: center; margin: 1.5rem 0; }
 #entrar {
     font: inherit;
     font-size: 1.3rem;
@@ -438,7 +435,9 @@ body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e
 /* La cara que aparece un instante */
 .destello { position: fixed; inset: 0; z-index: 20; display: none; place-items: center; background: #000000; pointer-events: none; }
 .destello.visible { display: grid; }
-.destello svg { width: min(70vw, 60vh); height: auto; filter: contrast(1.6) grayscale(1); transform: scale(1.08) skewX(-4deg); }
+.destello svg { width: min(100vw, 82vh); height: auto; filter: contrast(1.5) grayscale(1) sepia(0.3) hue-rotate(-30deg); transform: translateY(-9%) rotate(-6deg) skewX(-4deg); }
+.destello.cerca svg { transform: translateY(-14%) scale(1.45) rotate(4deg); filter: contrast(2.2) grayscale(1) invert(1); }
+.destello::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 4px), radial-gradient(ellipse at center, transparent 30%, #000000 85%); }
 
 /* A las 3:00 la sala entera cambia */
 html.hora-maldita { --fosforo: #ff8a8a; --fosforo-tenue: #8a3a3a; --hueso: #ffe0e0; --aviso: #ff3030; }
@@ -459,7 +458,7 @@ html.registrado body.pergamino .tu .oculto { color: #8b0000; font-weight: bold; 
 /* ════════ Cámara 13: el otro lado ════════ */
 body.otro-lado { background: radial-gradient(ellipse at center, #c9d6d8 0%, #6f8486 70%, #26302f 100%) fixed; color: #0a1414; }
 body.otro-lado::before { background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 10, 10, 0.85) 100%); }
-body.otro-lado header h1 { color: #0a1414; rotate: 180deg; text-shadow: -2px 0 var(--sangre-viva), 2px 0 #00616b; }
+body.otro-lado header h1 { animation: glitch 7s steps(1) infinite; color: #0a1414; rotate: 180deg; text-shadow: -2px 0 var(--sangre-viva), 2px 0 #00616b; }
 body.otro-lado h2 { color: #4a0000; text-shadow: none; }
 body.otro-lado main > section { background: rgba(230, 240, 240, 0.7); border-color: #9ab0b0; border-left-color: #4a0000; animation: none; }
 body.otro-lado main > section::before { content: "CÁMARA 13 · CAJÓN 0" counter(expediente); color: #26302f; }
@@ -471,6 +470,45 @@ body.otro-lado .repite { color: #6b0000; }
 body.otro-lado a { color: #4a0000; }
 body.otro-lado .rec, body.otro-lado .canal { color: #0a1414; text-shadow: none; }
 .salida { text-align: center; font-size: 1.4rem; }
+
+/* El formulario de acceso */
+.login { margin: 1.5rem 0; padding: 1rem 1.2rem; border: 1px solid #1d2e20; background: #030504; }
+.login p { margin: 0.5rem 0; }
+.login label { display: inline-block; min-width: 7.5rem; color: var(--fosforo-tenue); }
+.login input {
+    font: inherit;
+    font-size: 1.3rem;
+    width: min(16rem, 100%);
+    padding: 0.15rem 0.5rem;
+    color: var(--fosforo);
+    background: #000000;
+    border: 1px solid var(--fosforo-tenue);
+    caret-color: var(--sangre-viva);
+}
+.login input:focus { outline: 1px solid var(--fosforo); }
+.login input[readonly] { color: var(--sangre-viva); }
+.login .respuesta { min-height: 1.5em; color: var(--aviso); }
+.login p:last-child { text-align: center; }
+
+/* Un segundo cursor que hace lo mismo que tú, un poco más tarde */
+.cursor-fantasma {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 15;
+    width: 18px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 3s;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+}
+.cursor-fantasma.visible { opacity: 0.75; }
+
+@media (max-width: 600px) {
+    .canal { display: none; }
+    .rec { font-size: 1.05rem; }
+    main > section:nth-of-type(even) { margin-left: 0; }
+}
 
 /* Si el ordenador pide menos movimiento, quitamos todas las animaciones */
 @media (prefers-reduced-motion: reduce) {
