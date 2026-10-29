@@ -1,0 +1,114 @@
+/* pesadilla.css · Efectos extra de la Sala 3 (ACS-cd)
+   Se carga DESPUÉS de terror.css, que se queda tal cual la dio la profesora.
+   Solo CSS: sin JavaScript. */
+
+/* ── Ambiente: viñeta oscura y líneas de monitor viejo ── */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
+    animation: respira 7s ease-in-out infinite;
+}
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 11;
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 4px);
+    animation: apagon 11s steps(1) infinite;
+}
+@keyframes respira { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+/* Apagón: la pantalla se va a negro un instante, como si alguien pasara delante */
+@keyframes apagon {
+    0%, 61%, 62.5%, 63.5%, 100% { background-color: transparent; }
+    61.5%, 63% { background-color: rgba(0, 0, 0, 0.92); }
+}
+
+/* Cursor de mirilla */
+body { cursor: crosshair; }
+::selection { background: #8b0000; color: #000000; }
+
+/* ── El título tiembla y se descompone ── */
+header h1 { animation: vela 4s ease-in-out infinite, glitch 6s steps(1) infinite; }
+@keyframes glitch {
+    0%, 92%, 100% { transform: none; text-shadow: 0 0 20px #ff0000; }
+    93% { transform: translate(-4px, 2px) skewX(12deg); text-shadow: -6px 0 #00ffcc, 6px 0 #ff0000; }
+    95% { transform: translate(5px, -3px); text-shadow: 4px 0 #ff0000, -4px 0 #ffffff; }
+    97% { transform: scaleY(1.3); opacity: 0.4; }
+}
+
+/* ── Los fluorescentes de la morgue parpadean ── */
+#lista > img { animation: fluorescente 5s steps(1) infinite; }
+@keyframes fluorescente {
+    0%, 40%, 43%, 100% { filter: grayscale(0.4) contrast(1.1) brightness(1); }
+    41% { filter: grayscale(1) brightness(0.15); }
+    42% { filter: grayscale(0.4) brightness(1.6) sepia(1) hue-rotate(-40deg); }
+}
+/* Al acercarte al servidor, la pantalla se vuelve roja */
+figure img { transition: filter 2.5s ease-in; }
+figure:hover img { filter: grayscale(1) contrast(1.8) brightness(0.6) sepia(1) hue-rotate(-50deg) saturate(6); }
+
+/* ── Las secciones laten como un corazón ── */
+main > section { animation: latido 1.3s ease-in-out infinite; }
+@keyframes latido {
+    0%, 30%, 100% { box-shadow: 0 0 30px rgba(120, 0, 0, 0.35); }
+    10% { box-shadow: 0 0 55px rgba(200, 0, 0, 0.7); }
+    20% { box-shadow: 0 0 40px rgba(160, 0, 0, 0.5); }
+}
+
+/* ── Mensajes ocultos: solo se ven al seleccionar el texto o pasar el ratón ── */
+.oculto { color: transparent; }
+.oculto::selection { color: #ff0000; background: #000000; }
+p:hover > .oculto, li:hover > .oculto { color: #3a0000; transition: color 4s ease-in; }
+
+/* ── Texto que se escurre como sangre ── */
+.sangre {
+    display: inline-block;
+    color: #b30000;
+    text-shadow: 0 2px 0 #5c0000, 0 6px 6px #3a0000;
+    animation: gotea 9s ease-in infinite;
+}
+@keyframes gotea {
+    0%, 70% { transform: none; filter: none; }
+    85% { transform: translateY(4px) scaleY(1.15); filter: blur(0.5px); }
+    100% { transform: translateY(0); }
+}
+
+/* ── El cajón que no debes abrir ── */
+details.prohibido > summary { color: #ff2a2a; letter-spacing: 0.15em; }
+details.prohibido[open] {
+    background: #000000;
+    border: 2px solid #ff0000;
+    animation: susto 0.12s steps(2) 8;
+}
+details.prohibido[open] p {
+    font-family: "Creepster", fantasy;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    text-align: center;
+    color: #ff0000;
+    text-shadow: 0 0 25px #ff0000;
+    margin: 1rem 0;
+    animation: acerca 2.5s ease-out forwards;
+}
+@keyframes susto {
+    0% { background: #ffffff; }
+    100% { background: #000000; }
+}
+@keyframes acerca {
+    0% { transform: scale(0.2); opacity: 0; }
+    15% { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Lista de víctimas que crece sola */
+.repite { color: #5c0000; font-size: 0.9rem; letter-spacing: 0.3em; overflow-wrap: anywhere; }
+
+/* Si el ordenador pide menos movimiento, quitamos todas las animaciones */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}

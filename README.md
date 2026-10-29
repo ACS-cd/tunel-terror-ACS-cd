@@ -17,6 +17,9 @@ Un comentario oculto en el código de index.html indica que el usuario válido e
 
 ## Créditos
 Imágenes y sonidos con autor, web y licencia.
+- Imágenes: [Pixabay](https://pixabay.com) (licencia de contenido de Pixabay).
+- `audio/morgue.mp3`: sonido ambiente sintetizado por ordenador expresamente para esta sala (zumbido, viento, latido y chirridos). Sin derechos de terceros.
+- `css/pesadilla.css`: efectos extra de la sala. `css/terror.css` se mantiene tal cual la dio la profesora.
 
 ---
 
