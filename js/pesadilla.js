@@ -86,7 +86,7 @@
     const tituloOriginal = document.title;
     const icono = $("icono");
     const ojoAbierto = icono ? icono.href : "";
-    const ojoRojo = ojoAbierto.replace("%23ddd6c1", "%23d10f0f").replace("r='6'", "r='9'");
+    const ojoRojo = ojoAbierto.replace("%23ddd6c1", "%23d10f0f").replace("r='6'", "r='9'"); // el ojo se pone rojo y la pupila se dilata
     const llamadas = ["Vuelve.", "¿Por qué te has ido?", "Te estoy esperando.", "Sé dónde estás.", "No mires atrás.", "Ya estoy aquí."];
     let llamada;
     document.addEventListener("visibilitychange", () => {
