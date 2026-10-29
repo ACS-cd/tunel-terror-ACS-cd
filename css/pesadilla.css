@@ -1,114 +1,365 @@
-/* pesadilla.css · Efectos extra de la Sala 3 (ACS-cd)
-   Se carga DESPUÉS de terror.css, que se queda tal cual la dio la profesora.
+/* pesadilla.css · Sala 3 (ACS-cd) · Rediseño completo
+   Estética "analog horror": cinta VHS de vigilancia + aviso de emergencia + morgue clínica.
+   Se carga DESPUÉS de terror.css (que se queda tal cual la dio la profesora) y la sobrescribe entera.
    Solo CSS: sin JavaScript. */
+@import url("https://fonts.googleapis.com/css2?family=Nosifer&family=Rubik+Glitch&family=VT323&family=Special+Elite&family=Homemade+Apple&display=swap");
 
-/* ── Ambiente: viñeta oscura y líneas de monitor viejo ── */
+/* Contador de segundos para el reloj de la cinta (solo CSS) */
+@property --seg { syntax: "<integer>"; initial-value: 0; inherits: false; }
+@property --min { syntax: "<integer>"; initial-value: 0; inherits: false; }
+
+:root {
+    --fondo: #070a08;          /* negro verdoso de pasillo de hospital */
+    --fosforo: #a8e6a1;        /* verde de monitor viejo */
+    --fosforo-tenue: #5f8a5a;
+    --hueso: #ddd6c1;          /* blanco hueso, nunca blanco puro */
+    --sangre: #7a0a0a;         /* sangre seca */
+    --sangre-viva: #d10f0f;
+    --aviso: #e8cf3a;          /* amarillo de emergencia */
+    --cian: #00e5d4;           /* desfase de color VHS */
+    --magenta: #ff2bd6;
+}
+
+/* ════════ Base ════════ */
+html { background: var(--fondo); scrollbar-color: var(--sangre) #000000; }
+body {
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(80, 120, 80, 0.12), transparent 70%),
+        linear-gradient(#070a08, #020302) fixed;
+    color: var(--fosforo);
+    font-family: "VT323", "Courier New", monospace;
+    font-size: 1.45rem;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    cursor: crosshair;
+}
+/* La luz se va apagando mientras estás en la sala */
+html::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 8;
+    background: #000000;
+    opacity: 0;
+    animation: se-apaga 240s linear forwards;
+}
+@keyframes se-apaga { to { opacity: 0.4; } }
+::selection { background: var(--sangre-viva); color: #000000; }
+
+/* ════════ Capas: grano de cinta, viñeta y líneas de monitor ════════ */
+html::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    pointer-events: none;
+    z-index: 12;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grano 0.4s steps(4) infinite;
+}
+@keyframes grano {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-7%, 4%); }
+    50% { transform: translate(5%, -6%); }
+    75% { transform: translate(-3%, -2%); }
+}
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 10;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.92) 100%);
     animation: respira 7s ease-in-out infinite;
 }
+@keyframes respira { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
 body::after {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 11;
-    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 4px);
-    animation: apagon 11s steps(1) infinite;
+    background:
+        linear-gradient(to bottom, transparent 0, rgba(168, 230, 161, 0.06) 50%, transparent 100%) 0 0 / 100% 140px no-repeat,
+        repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px);
+    animation: barrido 6s linear infinite, apagon 13s steps(1) infinite;
 }
-@keyframes respira { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+/* La banda de interferencia que baja por la pantalla */
+@keyframes barrido { from { background-position: 0 -140px, 0 0; } to { background-position: 0 110vh, 0 0; } }
 /* Apagón: la pantalla se va a negro un instante, como si alguien pasara delante */
 @keyframes apagon {
     0%, 61%, 62.5%, 63.5%, 100% { background-color: transparent; }
-    61.5%, 63% { background-color: rgba(0, 0, 0, 0.92); }
+    61.5%, 63% { background-color: rgba(0, 0, 0, 0.95); }
 }
 
-/* Cursor de mirilla */
-body { cursor: crosshair; }
-::selection { background: #8b0000; color: #000000; }
-
-/* ── El título tiembla y se descompone ── */
-header h1 { animation: vela 4s ease-in-out infinite, glitch 6s steps(1) infinite; }
+/* ════════ Cabecera ════════ */
+header { padding: 4.5rem 1rem 1rem; text-align: center; }
+header h1 {
+    font-family: "Nosifer", fantasy;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: normal;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    color: var(--hueso);
+    text-shadow: -2px 0 var(--cian), 2px 0 var(--magenta), 0 0 30px rgba(209, 15, 15, 0.6);
+    animation: glitch 7s steps(1) infinite, deriva 31s ease-in-out infinite;
+}
 @keyframes glitch {
-    0%, 92%, 100% { transform: none; text-shadow: 0 0 20px #ff0000; }
-    93% { transform: translate(-4px, 2px) skewX(12deg); text-shadow: -6px 0 #00ffcc, 6px 0 #ff0000; }
-    95% { transform: translate(5px, -3px); text-shadow: 4px 0 #ff0000, -4px 0 #ffffff; }
-    97% { transform: scaleY(1.3); opacity: 0.4; }
+    0%, 90%, 100% { clip-path: none; transform: none; }
+    91% { clip-path: inset(10% 0 55% 0); transform: translate(-9px, 0) skewX(18deg); }
+    92% { clip-path: inset(60% 0 8% 0); transform: translate(11px, 0); }
+    93% { clip-path: none; transform: scaleY(1.6); opacity: 0.25; }
+    94% { transform: translate(-3px, 2px) scaleX(-1); }
 }
+/* El título se va torciendo despacio. Casi no se nota. Casi. */
+@keyframes deriva { 0%, 100% { rotate: 0deg; } 50% { rotate: -1.4deg; } }
 
-/* ── Los fluorescentes de la morgue parpadean ── */
-#lista > img { animation: fluorescente 5s steps(1) infinite; }
-@keyframes fluorescente {
-    0%, 40%, 43%, 100% { filter: grayscale(0.4) contrast(1.1) brightness(1); }
-    41% { filter: grayscale(1) brightness(0.15); }
-    42% { filter: grayscale(0.4) brightness(1.6) sepia(1) hue-rotate(-40deg); }
+nav ul { list-style: none; padding: 0; margin: 2rem 0 0; display: flex; flex-wrap: wrap; gap: 0.6rem 1.8rem; justify-content: center; }
+a { color: var(--aviso); text-decoration: none; border-bottom: 1px dashed currentColor; }
+a:hover { color: var(--sangre-viva); }
+/* Al pasar el ratón, los enlaces del menú se dan la vuelta */
+nav a { display: inline-block; transition: transform 0.15s; }
+nav a:hover { transform: scaleX(-1); }
+nav a::before { content: "> "; color: var(--fosforo-tenue); }
+
+/* ════════ Contenido ════════ */
+main { max-width: 860px; margin: 0 auto; padding: 1rem 1.25rem 7rem; }
+section {
+    position: relative;
+    background: rgba(8, 14, 10, 0.88);
+    border: 1px solid #1d2e20;
+    border-left: 4px solid var(--sangre);
+    border-radius: 2px;
+    padding: 1.6rem 2rem;
+    margin: 2.8rem 0;
+    box-shadow: 0 0 0 1px #000000, 0 20px 50px rgba(0, 0, 0, 0.8);
+    animation: latido 1.3s ease-in-out infinite;
 }
-/* Al acercarte al servidor, la pantalla se vuelve roja */
-figure img { transition: filter 2.5s ease-in; }
-figure:hover img { filter: grayscale(1) contrast(1.8) brightness(0.6) sepia(1) hue-rotate(-50deg) saturate(6); }
-
-/* ── Las secciones laten como un corazón ── */
-main > section { animation: latido 1.3s ease-in-out infinite; }
+/* Ninguna sección está recta del todo */
+main > section:nth-of-type(odd) { rotate: -0.5deg; }
+main > section:nth-of-type(even) { rotate: 0.7deg; margin-left: 1.5rem; }
+main > section:nth-of-type(3) { rotate: -1.2deg; }
 @keyframes latido {
-    0%, 30%, 100% { box-shadow: 0 0 30px rgba(120, 0, 0, 0.35); }
-    10% { box-shadow: 0 0 55px rgba(200, 0, 0, 0.7); }
-    20% { box-shadow: 0 0 40px rgba(160, 0, 0, 0.5); }
+    0%, 30%, 100% { box-shadow: 0 0 0 1px #000000, 0 20px 50px rgba(0, 0, 0, 0.8); }
+    10% { box-shadow: 0 0 0 1px #000000, 0 0 45px rgba(209, 15, 15, 0.45); }
 }
+/* Número de expediente en cada sección */
+main > section::before {
+    content: "EXP. 0" counter(expediente) " · 31/10";
+    counter-increment: expediente;
+    position: absolute;
+    top: -1.35rem;
+    right: 0.8rem;
+    font-size: 1rem;
+    color: var(--fosforo-tenue);
+    letter-spacing: 0.2em;
+}
+main { counter-reset: expediente; }
 
-/* ── Mensajes ocultos: solo se ven al seleccionar el texto o pasar el ratón ── */
+h2 {
+    font-family: "Rubik Glitch", fantasy;
+    font-weight: normal;
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    line-height: 1.1;
+    color: var(--sangre-viva);
+    text-shadow: -1px 0 var(--cian), 1px 0 var(--magenta);
+    margin: 0 0 1rem;
+    animation: tiembla 4.3s steps(1) infinite;
+}
+@keyframes tiembla { 0%, 96%, 100% { transform: none; } 97% { transform: translate(3px, -1px); } 98% { transform: translate(-2px, 1px); } }
+
+p { margin: 0 0 1rem; }
+em { color: var(--hueso); font-style: italic; }
+strong { color: var(--sangre-viva); font-weight: normal; text-transform: uppercase; letter-spacing: 0.08em; }
+mark { background: var(--aviso); color: #000000; padding: 0 0.3em; }
+del { color: #4f5f50; text-decoration-color: var(--sangre-viva); text-decoration-thickness: 2px; }
+abbr[title] { text-decoration: underline dotted var(--aviso); cursor: help; }
+/* Las notas pequeñas parecen escritas a mano por alguien que tenía prisa */
+small { font-family: "Homemade Apple", cursive; font-size: 0.85rem; color: #9a8f74; line-height: 1.9; }
+li { margin: 0.35rem 0; }
+li::marker { color: var(--sangre-viva); }
+ol li::marker { content: counter(list-item) ". "; font-family: "VT323", monospace; }
+
+/* ════════ Imágenes: cámara de vigilancia ════════ */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
+    border: 1px solid #2a3a2c;
+    filter: grayscale(1) sepia(0.35) hue-rotate(60deg) contrast(1.35) brightness(0.85);
+}
+/* En la foto de la morgue pierdes el cursor */
+#lista > img { cursor: none; animation: fluorescente 5s steps(1) infinite; }
+@keyframes fluorescente {
+    0%, 40%, 43%, 100% { filter: grayscale(1) sepia(0.35) hue-rotate(60deg) contrast(1.35) brightness(0.85); }
+    41% { filter: grayscale(1) brightness(0.08); }
+    42% { filter: invert(1) grayscale(1) contrast(2); }
+}
+figure { margin: 1.5rem auto; text-align: center; }
+figure img { transition: filter 3s ease-in, transform 20s linear; }
+figure:hover img { filter: grayscale(1) contrast(2) brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(7); transform: scale(1.08); }
+figcaption { color: var(--fosforo-tenue); font-size: 1.15rem; }
+figcaption::before { content: "CAM-02 ▸ "; color: var(--sangre-viva); }
+
+iframe { width: 100%; height: 440px; border: 1px solid #000000; background: #cfc6a8; box-shadow: 0 0 0 6px #120c08, 0 0 40px rgba(0, 0, 0, 0.9); rotate: 0.4deg; }
+audio { display: block; width: 100%; margin: 1rem 0; filter: invert(1) hue-rotate(180deg) sepia(0.6) saturate(0.6); }
+
+footer { text-align: center; color: #3d4d3f; font-size: 1.05rem; padding: 2rem 1rem 6rem; }
+footer a { color: #5f6f60; }
+
+/* ════════ Elementos de la cinta ════════ */
+/* REC con reloj que corre de verdad */
+.rec {
+    position: fixed;
+    top: 0.8rem;
+    left: 1rem;
+    z-index: 13;
+    font-family: "VT323", monospace;
+    font-size: 1.3rem;
+    color: var(--hueso);
+    text-shadow: 0 0 4px #000000;
+    pointer-events: none;
+}
+.rec::before { content: "● "; color: var(--sangre-viva); animation: parpadeo 1s steps(1) infinite; }
+.rec::after {
+    content: " 03:" counter(m, decimal-leading-zero) ":" counter(s, decimal-leading-zero);
+    counter-reset: m var(--min) s var(--seg);
+    animation: segundos 60s steps(60) infinite, minutos 3600s steps(60) infinite;
+}
+@keyframes segundos { from { --seg: 0; } to { --seg: 60; } }
+@keyframes minutos { from { --min: 0; } to { --min: 60; } }
+@keyframes parpadeo { 50% { opacity: 0; } }
+.canal { position: fixed; top: 0.8rem; right: 1rem; z-index: 13; color: var(--hueso); font-size: 1.3rem; pointer-events: none; }
+
+/* Cinta de aviso de emergencia que cruza la pantalla */
+.emision {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 13;
+    overflow: hidden;
+    background: var(--aviso);
+    color: #000000;
+    border-top: 3px solid #000000;
+    white-space: nowrap;
+}
+.emision p {
+    display: inline-block;
+    margin: 0;
+    padding: 0.25rem 0 0.25rem 100%;
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    animation: teletipo 55s linear infinite;
+}
+@keyframes teletipo { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+/* Ojos en la oscuridad: aparecen un momento y parpadean */
+.ojos {
+    position: fixed;
+    left: 3vw;
+    bottom: 22vh;
+    z-index: 9;
+    width: 70px;
+    height: 14px;
+    pointer-events: none;
+    opacity: 0;
+    animation: aparecen 23s ease-in-out infinite;
+}
+.ojos::before, .ojos::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 22px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #000000 0 2px, #ffe9a8 3px, #c99a18 6px, rgba(201, 50, 0, 0.6) 9px, transparent 11px);
+    box-shadow: 0 0 14px rgba(255, 200, 80, 0.35);
+    animation: parpadea 23s steps(1) infinite;
+}
+.ojos::before { left: 0; }
+.ojos::after { right: 0; }
+@keyframes aparecen { 0%, 70%, 85%, 100% { opacity: 0; } 74%, 81% { opacity: 0.9; } }
+@keyframes parpadea { 0%, 77%, 78%, 100% { transform: none; } 77.5% { transform: scaleY(0.05); } }
+
+/* Texto escrito al revés, como en un espejo */
+.espejo { display: block; transform: scaleX(-1); text-align: right; color: #4a5a4b; font-size: 1.1rem; }
+
+/* ════════ Mensajes ocultos: solo se ven al seleccionar o pasar el ratón ════════ */
 .oculto { color: transparent; }
-.oculto::selection { color: #ff0000; background: #000000; }
-p:hover > .oculto, li:hover > .oculto { color: #3a0000; transition: color 4s ease-in; }
+.oculto::selection { color: var(--sangre-viva); background: #000000; }
+p:hover > .oculto, li:hover > .oculto { color: #3f1010; transition: color 4s ease-in; }
 
-/* ── Texto que se escurre como sangre ── */
+/* Texto que se escurre como sangre */
 .sangre {
     display: inline-block;
-    color: #b30000;
-    text-shadow: 0 2px 0 #5c0000, 0 6px 6px #3a0000;
+    font-family: "Nosifer", fantasy;
+    font-size: 0.85em;
+    color: var(--sangre-viva);
+    text-shadow: 0 3px 0 var(--sangre), 0 8px 8px #2a0000;
     animation: gotea 9s ease-in infinite;
 }
 @keyframes gotea {
     0%, 70% { transform: none; filter: none; }
-    85% { transform: translateY(4px) scaleY(1.15); filter: blur(0.5px); }
-    100% { transform: translateY(0); }
+    85% { transform: translateY(4px) scaleY(1.2); filter: blur(0.6px); }
+    100% { transform: none; }
 }
 
-/* ── El cajón que no debes abrir ── */
-details.prohibido > summary { color: #ff2a2a; letter-spacing: 0.15em; }
-details.prohibido[open] {
-    background: #000000;
-    border: 2px solid #ff0000;
-    animation: susto 0.12s steps(2) 8;
-}
-details.prohibido[open] p {
-    font-family: "Creepster", fantasy;
-    font-size: 3.5rem;
-    line-height: 1.1;
+/* Lista que se escribe sola */
+.repite { color: #3a1414; font-size: 1.05rem; letter-spacing: 0.3em; overflow-wrap: anywhere; }
+
+/* El cajón que no debes abrir */
+details { background: #050505; border: 1px dashed var(--sangre); border-radius: 0; padding: 1rem; }
+summary { cursor: pointer; color: var(--aviso); }
+details.prohibido > summary { color: var(--sangre-viva); letter-spacing: 0.2em; }
+details.prohibido[open] { border: 2px solid var(--sangre-viva); animation: susto 0.1s steps(2) 10; }
+details.prohibido[open] p:first-of-type {
+    font-family: "Nosifer", fantasy;
+    font-size: clamp(2rem, 7vw, 3.6rem);
+    line-height: 1.2;
     text-align: center;
-    color: #ff0000;
-    text-shadow: 0 0 25px #ff0000;
-    margin: 1rem 0;
+    color: var(--sangre-viva);
+    text-shadow: -3px 0 var(--cian), 3px 0 var(--magenta), 0 0 30px var(--sangre-viva);
+    margin: 1.2rem 0;
     animation: acerca 2.5s ease-out forwards;
 }
-@keyframes susto {
-    0% { background: #ffffff; }
-    100% { background: #000000; }
-}
+@keyframes susto { 0% { background: var(--hueso); } 100% { background: #000000; } }
 @keyframes acerca {
-    0% { transform: scale(0.2); opacity: 0; }
-    15% { transform: scale(1.4); opacity: 1; }
+    0% { transform: scale(0.1); opacity: 0; }
+    12% { transform: scale(1.5); opacity: 1; }
     100% { transform: scale(1); }
 }
 
-/* Lista de víctimas que crece sola */
-.repite { color: #5c0000; font-size: 0.9rem; letter-spacing: 0.3em; overflow-wrap: anywhere; }
+/* ════════ El pergamino: informe de autopsia manchado ════════ */
+body.pergamino {
+    background:
+        radial-gradient(circle at 82% 18%, rgba(110, 10, 10, 0.55) 0 18px, rgba(110, 10, 10, 0.25) 26px, transparent 46px),
+        radial-gradient(circle at 15% 85%, rgba(90, 60, 20, 0.35) 0 40px, transparent 90px),
+        radial-gradient(ellipse at center, #d6cba6 0%, #b5a679 70%, #6e5f3a 100%);
+    color: #2a1f12;
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1.1rem;
+    padding: 1.2rem 1.5rem;
+    cursor: crosshair;
+}
+body.pergamino::after { background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px); animation: apagon 13s steps(1) infinite; }
+body.pergamino::before { background: radial-gradient(ellipse at center, transparent 55%, rgba(30, 15, 0, 0.6) 100%); }
+body.pergamino main { padding: 0; rotate: -0.6deg; }
+body.pergamino h1 { font-family: "Nosifer", fantasy; font-size: 1.9rem; color: #5c0000; text-shadow: none; animation: none; margin: 0 0 0.5rem; }
+body.pergamino strong { color: #8b0000; font-weight: bold; }
+body.pergamino em { color: #4a2a10; }
+body.pergamino del { color: #7a6a4a; text-decoration-color: #5c0000; }
+body.pergamino li::marker { color: #5c0000; }
+body.pergamino small { color: #5c0000; font-size: 0.8rem; }
+body.pergamino details { background: rgba(255, 245, 220, 0.4); border-color: #5c0000; }
+body.pergamino summary { color: #5c0000; }
+body.pergamino .oculto::selection { color: #ffffff; background: #5c0000; }
+body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e3020; }
 
 /* Si el ordenador pide menos movimiento, quitamos todas las animaciones */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
+    html::before { display: none; }
 }
