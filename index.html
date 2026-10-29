@@ -7,6 +7,7 @@
     <title>Sala 3 · Morgue municipal · Soporte técnico</title>
     <link rel="stylesheet" href="css/terror.css">
     <link rel="stylesheet" href="css/pesadilla.css">
+    <script src="js/pesadilla.js" defer></script>
 </head>
 <body>
     <div class="rec" aria-hidden="true">REC · CINTA 03 · 31-OCT</div>
@@ -23,12 +24,13 @@
                 <li><a href="pergamino.html">Abrir a pantalla completa</a></li>
             </ul>
         </nav>
+        <p class="aviso-hora" id="hora"></p>
     </header>
 
     <main data-propietario="ACS-cd">
         <section id="historia">
             <h2>La historia</h2>
-            <p>Bienvenido al <strong>soporte técnico</strong> de la morgue municipal.<br>
+            <p><span data-despues="Bienvenido de nuevo">Bienvenido</span> al <strong>soporte técnico</strong> de la morgue municipal.<br>
             Desde el 13 de octubre el sistema funciona <del>correctamente</del> <del>de forma extraña</del> como <em>él</em> quiere.</p>
             <p>Los empleados dicen que la contraseña <em>se escribe sola</em> y que el botón de entrar huye del ratón.
             El <abbr title="Departamento de Tecnologías de la Información">departamento TI</abbr> no encuentra el fallo.
@@ -39,9 +41,10 @@
             <p>Cada noche, a las 3:00 h, la impresora saca la misma hoja: una lista de nombres.
             Esta mañana había uno más que ayer. <em>Era el del vigilante de noche.</em>
             <span class="oculto">Mañana habrá otro. Ya ha empezado a escribirlo.</span></p>
-            <p>Aviso importante: la sala de servidores está a 4 <sup>o</sup>C y huele a CH<sub>2</sub>O. <mark>No entréis solos.</mark>
+            <p>Aviso importante: la sala de servidores está a 4 <sup>o</sup>C y huele a CH<sub>2</sub>O. <mark data-despues="No entraste solo.">No entréis solos.</mark>
             <mark>Y si entráis acompañados, contad cuántos salís.</mark></p>
-            <p><small>Este mensaje se ha generado automáticamente... ¿o no? Lleva tu nombre en la última línea del código.</small></p>
+            <p><small data-despues="Este mensaje lo está escribiendo alguien ahora mismo. Desde dentro.">Este mensaje se ha generado automáticamente... ¿o no? Lleva tu nombre en la última línea del código.</small></p>
+            <p class="visitas" id="visitas"></p>
             <!-- El usuario válido está en el registro (pergamino.html) -->
             <p class="espejo">sé que estás leyendo esto. yo también te leo a ti.</p>
             <!-- No mires detrás de ti. Ya sabemos que estás leyendo el código fuente. -->
@@ -60,7 +63,7 @@
                 <li>Escribe tu nombre de usuario.</li>
                 <li>Si el botón «Entrar» se escapa:
                     <ul>
-                        <li>no lo persigas,</li>
+                        <li data-despues="no lo persigas: él te persigue a ti,">no lo persigas,</li>
                         <li>comprueba que tu usuario sigue vivo,</li>
                         <li>vuelve a intentarlo.</li>
                     </ul>
@@ -69,11 +72,15 @@
                 <li value="5">Si sigue encendida después de apagarla, <strong>no respondas</strong>.</li>
                 <li>Si contestas, ya no podrás <del>salir</del> <del>cerrar sesión</del> <span class="sangre">morir del todo</span>.</li>
             </ol>
+            <p class="login"><button type="button" id="entrar">Entrar</button></p>
+            <p class="tras-boton" id="tras-boton" hidden>No tenías que pulsarlo. <a href="camara13.html">Ahora tienes que bajar a la cámara 13.</a></p>
             <p><small>¿Dónde está el paso 4? Lo arrancaron. El que lo escribió está en la cámara 13.</small></p>
-            <img src="img/morgue.jpg" alt="Pasillo de hospital antiguo con luces fluorescentes parpadeando y una camilla vacía al fondo" width="450">
+            <div class="pasillo">
+                <img src="img/morgue.jpg" alt="Pasillo de hospital antiguo con luces fluorescentes parpadeando y camas vacías al fondo" width="450">
+            </div>
             <figure>
                 <img src="img/ordenador.jpg" alt="Ordenador viejo con la pantalla verde en una sala oscura" width="450">
-                <figcaption>El servidor de la morgue. Lo desenchufamos hace un mes. Sigue encendido. <em>No te acerques demasiado.</em></figcaption>
+                <figcaption data-despues="El servidor de la morgue. Lo desenchufamos hace un mes. Sigue encendido. Te ha visto pasar.">El servidor de la morgue. Lo desenchufamos hace un mes. Sigue encendido. <em>No te acerques demasiado.</em></figcaption>
             </figure>
         </section>
 
@@ -84,7 +91,7 @@
                 <li><strong>#0314</strong> · El monitor de la sala de autopsias muestra la cara del usuario antes de que se siente. <small>Estado: sin asignar.</small></li>
                 <li><strong>#0315</strong> · Alguien ha cambiado todas las contraseñas por la misma palabra: <em>«ayuda»</em>. <small>Estado: el técnico no ha vuelto.</small></li>
                 <li><strong>#0316</strong> · Hay huellas de manos por <em>dentro</em> de la pantalla. <small>Estado: no limpiar.</small></li>
-                <li><strong>#0317</strong> · <span class="sangre">Nueva incidencia abierta por: tú.</span> <small>Hace 0 minutos.</small></li>
+                <li><strong>#0317</strong> · <span class="sangre">Nueva incidencia abierta por: tú.</span> <small id="hace">Hace 0 minutos.</small></li>
             </ul>
             <p class="repite">déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame salir déjame entrar</p>
             <details class="prohibido">
@@ -99,15 +106,33 @@
             <p>Lo encontramos en el cajón 13 de la cámara frigorífica, debajo de una sábana. Estaba tibio. Leedlo con cuidado...</p>
             <iframe src="pergamino.html" title="Registro de usuarios" width="600" height="400"></iframe>
         </section>
+
+        <!-- Esta sección no debería estar aquí. Nadie la ha escrito. -->
+        <section id="historia-otra-vez" class="repetida">
+            <h2>La historia</h2>
+            <p>Bienvenido al <strong>soporte técnico</strong> de la morgue municipal.<br>
+            Desde el 13 de octubre el sistema funciona <del>correctamente</del> <del>de forma extraña</del> como <em>él</em> quiere.</p>
+            <p>Los empleados dicen que la contraseña <em>se escribe sola</em> y que el botón de entrar huye del ratón.
+            El <abbr title="Departamento de Tecnologías de la Información">departamento TI</abbr> no encuentra el fallo.
+            El <em>visitante</em> que lo leyó tampoco aparece. Su usuario sigue <strong>conectado</strong>.</p>
+            <p>Hoy es <strong>31 de octubre</strong>. Es la única noche del año en que el sistema deja entrar a los de fuera.
+            <em>Y tú ya has entrado.</em></p>
+            <p>Cada noche, a las 3:00 h, la impresora saca la misma hoja: una lista de nombres.
+            Esta mañana había uno más que ayer. <em>Era el tuyo.</em></p>
+            <p>Aviso importante: el pasillo no termina. <mark>Ya has pasado por aquí.</mark>
+            <mark>Vuelve arriba. Vuelve arriba. Vuelve arriba.</mark></p>
+            <p><a href="#historia">Volver al principio</a> <small>(no cambiará nada)</small></p>
+        </section>
     </main>
 
     <footer>
-        <p>Imágenes de <a href="https://pixabay.com" target="_blank" rel="noopener">Pixabay</a> · Sonido ambiente generado por ordenador para esta sala · Sala creada por ACS-cd para el túnel del terror</p>
+        <p>Imágenes de <a href="https://pixabay.com" target="_blank" rel="noopener">Pixabay</a> · Sonido ambiente generado por ordenador para esta sala · Sala creada por ACS-cd para el túnel del terror<a class="grieta" href="camara13.html">.</a></p>
         <p><small>Visitantes conectados ahora mismo: 2. Tú y el que está detrás de ti.</small></p>
     </footer>
     <div class="emision" aria-hidden="true">
         <p>⚠ AVISO DE EMERGENCIA · NOCHE DEL 31 DE OCTUBRE · SE RUEGA A LA POBLACIÓN QUE NO SALGA DE CASA · NO ABRA LA PUERTA A NADIE QUE DIGA TRABAJAR EN LA MORGUE MUNICIPAL · SI ALGUIEN DE SU FAMILIA LE LLAMA DESDE OTRA HABITACIÓN, NO CONTESTE · NO MIRE POR LA VENTANA · LOS CUERPOS DE LA CÁMARA 13 NO HAN SIDO LOCALIZADOS · ESTE MENSAJE SE REPETIRÁ · ESTE MENSAJE SE REPETIRÁ · ESTE MENSAJE SE REPETIRÁ · YA ESTÁ DENTRO ·</p>
     </div>
     <!-- Registro de usuarios · alta nueva: visitante (tú). Hora de acceso: ahora. Estado: ya no puede salir. -->
+    <!-- La cámara 13 está en camara13.html. No bajes. -->
 </body>
 </html>

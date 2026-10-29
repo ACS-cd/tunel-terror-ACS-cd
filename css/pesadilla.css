@@ -191,7 +191,7 @@ img {
     filter: grayscale(1) sepia(0.35) hue-rotate(60deg) contrast(1.35) brightness(0.85);
 }
 /* En la foto de la morgue pierdes el cursor */
-#lista > img { cursor: none; animation: fluorescente 5s steps(1) infinite; }
+.pasillo img { margin: 0; cursor: none; animation: fluorescente 5s steps(1) infinite; }
 @keyframes fluorescente {
     0%, 40%, 43%, 100% { filter: grayscale(1) sepia(0.35) hue-rotate(60deg) contrast(1.35) brightness(0.85); }
     41% { filter: grayscale(1) brightness(0.08); }
@@ -268,6 +268,7 @@ footer a { color: #5f6f60; }
     opacity: 0;
     animation: aparecen 23s ease-in-out infinite;
 }
+.ojos { --px: 0px; --py: 0px; }
 .ojos::before, .ojos::after {
     content: "";
     position: absolute;
@@ -275,7 +276,7 @@ footer a { color: #5f6f60; }
     width: 22px;
     height: 12px;
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, #000000 0 2px, #ffe9a8 3px, #c99a18 6px, rgba(201, 50, 0, 0.6) 9px, transparent 11px);
+    background: radial-gradient(circle at calc(50% + var(--px, 0px)) calc(50% + var(--py, 0px)), #000000 0 2px, #ffe9a8 3px, #c99a18 6px, rgba(201, 50, 0, 0.6) 9px, transparent 11px);
     box-shadow: 0 0 14px rgba(255, 200, 80, 0.35);
     animation: parpadea 23s steps(1) infinite;
 }
@@ -357,6 +358,119 @@ body.pergamino details { background: rgba(255, 245, 220, 0.4); border-color: #5c
 body.pergamino summary { color: #5c0000; }
 body.pergamino .oculto::selection { color: #ffffff; background: #5c0000; }
 body.pergamino p:hover > .oculto, body.pergamino li:hover > .oculto { color: #6e3020; }
+
+/* ════════ Extras sobrenaturales (los mueve js/pesadilla.js) ════════ */
+
+/* Una figura al fondo del pasillo que se acerca un poco cada minuto */
+.pasillo { position: relative; width: fit-content; max-width: 100%; margin: 1.5rem auto; overflow: hidden; cursor: none; }
+.pasillo::after {
+    content: "";
+    position: absolute;
+    left: 52.5%;
+    bottom: 49%;
+    height: 9%;
+    aspect-ratio: 0.38;
+    translate: -50% 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 43% 9%, rgba(255, 240, 200, 0.85) 0 1.6%, transparent 2.4%),
+        radial-gradient(circle at 57% 9%, rgba(255, 240, 200, 0.85) 0 1.6%, transparent 2.4%),
+        radial-gradient(ellipse 17% 10% at 50% 9%, #000000 85%, transparent 100%),
+        radial-gradient(ellipse 40% 34% at 50% 40%, #000000 85%, transparent 100%),
+        linear-gradient(to right, transparent 26%, #000000 30% 47%, transparent 48% 52%, #000000 53% 70%, transparent 74%) 0 60% / 100% 42% no-repeat;
+    filter: blur(0.7px);
+    opacity: 0.9;
+    animation: se-acerca 420s cubic-bezier(0.6, 0, 1, 1) forwards, fluorescente-figura 5s steps(1) infinite;
+}
+@keyframes se-acerca {
+    from { height: 9%; bottom: 49%; }
+    to { height: 92%; bottom: 2%; }
+}
+/* Cuando la luz se va, la figura desaparece; cuando vuelve en negativo, está más clara que nunca */
+@keyframes fluorescente-figura { 0%, 40%, 43%, 100% { opacity: 0.9; } 41% { opacity: 0; } 42% { opacity: 1; filter: invert(1) blur(0.4px); } }
+
+/* La hora y las visitas */
+.aviso-hora { margin: 1.4rem auto 0; color: var(--aviso); font-size: 1.25rem; letter-spacing: 0.06em; }
+.aviso-hora:empty, .visitas:empty { display: none; }
+.visitas { color: var(--hueso); border-left: 2px solid var(--sangre-viva); padding-left: 0.8rem; }
+
+/* El botón que huye */
+.login { text-align: center; margin: 1.5rem 0; }
+#entrar {
+    font: inherit;
+    font-size: 1.3rem;
+    padding: 0.4rem 1.6rem;
+    color: #000000;
+    background: var(--fosforo);
+    border: 2px solid #000000;
+    box-shadow: 0 0 0 2px var(--fosforo-tenue);
+    cursor: pointer;
+    transition: transform 0.18s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+#entrar:disabled { background: var(--sangre-viva); cursor: not-allowed; }
+.tras-boton { text-align: center; color: var(--sangre-viva); }
+
+/* La historia repetida al final: igual, pero no del todo */
+.repetida { opacity: 0.82; rotate: 1.6deg; border-left-color: var(--fosforo-tenue); }
+.repetida h2 { transform: scaleX(-1); display: inline-block; }
+
+/* El punto del pie de página que lleva a la cámara 13 */
+.grieta { color: inherit; border: 0; text-decoration: none; cursor: crosshair; }
+.grieta:hover { color: var(--sangre-viva); }
+
+/* Mensaje si te quedas quieto */
+.susurro {
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    translate: -50% -50%;
+    z-index: 14;
+    pointer-events: none;
+    font-family: "Homemade Apple", cursive;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--hueso);
+    text-shadow: 0 0 12px #000000, 0 0 30px #000000;
+    opacity: 0;
+    transition: opacity 6s ease-in;
+}
+.susurro.visible { opacity: 0.85; }
+
+/* La cara que aparece un instante */
+.destello { position: fixed; inset: 0; z-index: 20; display: none; place-items: center; background: #000000; pointer-events: none; }
+.destello.visible { display: grid; }
+.destello svg { width: min(70vw, 60vh); height: auto; filter: contrast(1.6) grayscale(1); transform: scale(1.08) skewX(-4deg); }
+
+/* A las 3:00 la sala entera cambia */
+html.hora-maldita { --fosforo: #ff8a8a; --fosforo-tenue: #8a3a3a; --hueso: #ffe0e0; --aviso: #ff3030; }
+html.hora-maldita body { background: radial-gradient(ellipse at center, #3a0000 0%, #000000 80%) fixed; }
+html.hora-maldita main > section { rotate: 180deg; }
+html.hora-maldita main > section:hover { rotate: 0deg; transition: rotate 1.5s ease-in-out; }
+html.hora-maldita .ojos { opacity: 0.9; animation: none; }
+
+/* Al pulsar el botón, la sala empieza a fallar */
+html.ha-entrado main > section { animation: latido 0.6s ease-in-out infinite; }
+
+/* El pergamino respira */
+body.pergamino main { animation: respira-papel 8s ease-in-out infinite; transform-origin: center top; }
+@keyframes respira-papel { 0%, 100% { scale: 1; } 50% { scale: 1.012; } }
+/* A partir de la segunda visita tu nombre aparece en el registro */
+html.registrado body.pergamino .tu .oculto { color: #8b0000; font-weight: bold; text-decoration: none; }
+
+/* ════════ Cámara 13: el otro lado ════════ */
+body.otro-lado { background: radial-gradient(ellipse at center, #c9d6d8 0%, #6f8486 70%, #26302f 100%) fixed; color: #0a1414; }
+body.otro-lado::before { background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 10, 10, 0.85) 100%); }
+body.otro-lado header h1 { color: #0a1414; rotate: 180deg; text-shadow: -2px 0 var(--sangre-viva), 2px 0 #00616b; }
+body.otro-lado h2 { color: #4a0000; text-shadow: none; }
+body.otro-lado main > section { background: rgba(230, 240, 240, 0.7); border-color: #9ab0b0; border-left-color: #4a0000; animation: none; }
+body.otro-lado main > section::before { content: "CÁMARA 13 · CAJÓN 0" counter(expediente); color: #26302f; }
+body.otro-lado strong { color: #6b0000; }
+body.otro-lado em { color: #102020; }
+body.otro-lado small { color: #3a4444; }
+body.otro-lado .espejo { color: #3a4444; }
+body.otro-lado .repite { color: #6b0000; }
+body.otro-lado a { color: #4a0000; }
+body.otro-lado .rec, body.otro-lado .canal { color: #0a1414; text-shadow: none; }
+.salida { text-align: center; font-size: 1.4rem; }
 
 /* Si el ordenador pide menos movimiento, quitamos todas las animaciones */
 @media (prefers-reduced-motion: reduce) {

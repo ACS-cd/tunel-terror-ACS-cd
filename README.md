@@ -19,6 +19,8 @@ Un comentario oculto en el código de index.html indica que el usuario válido e
 Imágenes y sonidos con autor, web y licencia.
 - Imágenes: [Pixabay](https://pixabay.com) (licencia de contenido de Pixabay).
 - `audio/morgue.mp3`: sonido ambiente sintetizado por ordenador expresamente para esta sala (zumbido, viento, latido y chirridos). Sin derechos de terceros.
+- `js/pesadilla.js`: comportamientos extra (la pestaña te llama, textos que cambian cuando no miras, botón que huye, cuenta de visitas, hora real, destello). La sala funciona igual sin él. Para probar: `index.html?hora=3` (hora maldita) y `index.html?susto=1` (destello a los 3 s).
+- `camara13.html`: página secreta (se llega pulsando el botón «Entrar» o desde el punto final del pie de página).
 - `css/pesadilla.css`: efectos extra de la sala. `css/terror.css` se mantiene tal cual la dio la profesora.
 
 ---
